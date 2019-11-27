@@ -14,33 +14,35 @@ var data = JSON.parse('{"pc":{"gender":["Male","Female"],"race":["Altmer","Argon
 var pc = data.pc;
 var npc = data.npcs;
 
-var azurarace
-var azuragender
-var azuracombat
-var azuracombatPoints
-var azuraarmor
-var azuraarmorPoints
-var azuraskill1Name
-var azuraskill1Points
-var azuraskill2Name
-var azuraskill2Points
-var azuraskill3Name
-var azuraskill3Points
-var azuraskill4Name
-var azuraskill4Points
-var azuratotalSkillPoints
-var azurahealth
-var azuramagicka
-var azurastamina
-var azurafollower
-var azuraspouse1
-var azuraspouse2
-var azuraprimaryResidence
-var azurasteward
-var azuraprimaryQuestFaction
-var azuradisease
-var azurabladesFaction
-var azuracivilWarFaction
+var skyrimVars = {};
+
+// var azurarace
+// var azuragender
+// var azuracombat
+// var azuracombatPoints
+// var azuraarmor
+// var azuraarmorPoints
+// var azuraskill1Name
+// var azuraskill1Points
+// var azuraskill2Name
+// var azuraskill2Points
+// var azuraskill3Name
+// var azuraskill3Points
+// var azuraskill4Name
+// var azuraskill4Points
+// var azuratotalSkillPoints
+// var azurahealth
+// var azuramagicka
+// var azurastamina
+// var azurafollower
+// var azuraspouse1
+// var azuraspouse2
+// var azuraprimaryResidence
+// var azurasteward
+// var azuraprimaryQuestFaction
+// var azuradisease
+// var azurabladesFaction
+// var azuracivilWarFaction
 
 
 function skyrimCharGen() {
