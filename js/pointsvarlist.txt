@@ -1,0 +1,7 @@
+var combatPoints
+var armorPoints
+var skill1Points
+var skill2Points
+var skill3Points
+var skill4Points
+var totalSkillPoints
