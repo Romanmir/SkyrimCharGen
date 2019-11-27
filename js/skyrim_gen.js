@@ -16,34 +16,7 @@ var npc = data.npcs;
 
 var skyrimVars = {};
 
-// var azurarace
-// var azuragender
-// var azuracombat
-// var azuracombatPoints
-// var azuraarmor
-// var azuraarmorPoints
-// var azuraskill1Name
-// var azuraskill1Points
-// var azuraskill2Name
-// var azuraskill2Points
-// var azuraskill3Name
-// var azuraskill3Points
-// var azuraskill4Name
-// var azuraskill4Points
-// var azuratotalSkillPoints
-// var azurahealth
-// var azuramagicka
-// var azurastamina
-// var azurafollower
-// var azuraspouse1
-// var azuraspouse2
-// var azuraprimaryResidence
-// var azurasteward
-// var azuraprimaryQuestFaction
-// var azuradisease
-// var azurabladesFaction
-// var azuracivilWarFaction
-
+//foo['bar']=blah
 
 function skyrimCharGen() {
 
@@ -81,75 +54,75 @@ function skyrimCharGen() {
 		skill4RNG = Math.round(getRandomNumber(0,11));
 	}
 
-	var gender = pc.gender[genderRNG];
-	var race = pc.race[raceRNG];
-	var civilwarFaction = pc.civilwar[civilwarRNG];
-	var bladesFaction = pc.blades[bladesRNG];
+	skyrimVars['gender'] = pc.gender[genderRNG];
+	skyrimVars['race'] = pc.race[raceRNG];
+	skyrimVars['civilwarFaction'] = pc.civilwar[civilwarRNG];
+	skyrimVars['bladesFaction'] = pc.blades[bladesRNG];
 
-	var combat = pc.combat[combatRNG].name;
-	var combatPoints = pc.combat[combatRNG].skillpoints;
+	skyrimVars['combat'] = pc.combat[combatRNG].name;
+	skyrimVars['combatPoints'] = pc.combat[combatRNG].skillpoints;
 	
-	var armor = pc.armor[armorRNG].name;
-	var armorPoints = pc.armor[armorRNG].skillpoints;
+	skyrimVars['armor'] = pc.armor[armorRNG].name;
+	skyrimVars['armorPoints'] = pc.armor[armorRNG].skillpoints;
 	
-	var skill1Name = pc.skills[skill1RNG].name; 
-	var skill1Points = pc.skills[skill1RNG].skillpoints;
-	var skill2Name = pc.skills[skill2RNG].name;
-	var skill2Points = pc.skills[skill2RNG].skillpoints;
-	var skill3Name = pc.skills[skill3RNG].name;
-	var skill3Points = pc.skills[skill3RNG].skillpoints;
-	var skill4Name = pc.skills[skill4RNG].name;
-	var skill4Points =pc.skills[skill4RNG].skillpoints;
+	skyrimVars['skill1Name'] = pc.skills[skill1RNG].name; 
+	skyrimVars['skill1Points'] = pc.skills[skill1RNG].skillpoints;
+	skyrimVars['skill2Name'] = pc.skills[skill2RNG].name;
+	skyrimVars['skill2Points'] = pc.skills[skill2RNG].skillpoints;
+	skyrimVars['skill3Name'] = pc.skills[skill3RNG].name;
+	skyrimVars['skill3Points'] = pc.skills[skill3RNG].skillpoints;
+	skyrimVars['skill4Name'] = pc.skills[skill4RNG].name;
+	skyrimVars['skill4Points'] =pc.skills[skill4RNG].skillpoints;
 
-	var magicka = Math.round(getRandomNumber(1,5));
-	var health = Math.round(getRandomNumber(1,5));
-	var stamina = Math.round(getRandomNumber(1,5));
+	skyrimVars['magicka'] = Math.round(getRandomNumber(1,5));
+	skyrimVars['health'] = Math.round(getRandomNumber(1,5));
+	skyrimVars['stamina'] = Math.round(getRandomNumber(1,5));
 
 	//sigh, spouses code block
-	var spouseGender = (gender =="Male") ? spouseGender="Female" : spouseGender="Male";
+	skyrimVars['spouseGender'] = (gender =="Male") ? spouseGender="Female" : spouseGender="Male";
 	var validSpouses = filterObj(spousesList, {gender: spouseGender});
-	var spouse1 = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
-	var spouse2 = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	skyrimVars['spouse1'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 
-	while (spouse2 == spouse1){
-		spouse2 = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	while (skyrimVars['spouse1'] == skyrimVars['spouse2']){
+		skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 	}
 
 	//steward block
-	var steward = stewardsList[Math.round(getRandomNumber(0,32))];
+	skyrimVars['steward'] = stewardsList[Math.round(getRandomNumber(0,32))];
 
 	//follower block
-	var follower = followersList[Math.round(getRandomNumber(0,36))];
+	skyrimVars['follower'] = followersList[Math.round(getRandomNumber(0,36))];
 
 	//residence block
-	var primaryResidence = pc.residence[residenceRNG];
+	skyrimVars['primaryResidence'] = pc.residence[residenceRNG];
 
 	//Disease assignment
-	var disease = pc.disease[diseaseRNG];
+	skyrimVars['disease'] = pc.disease[diseaseRNG];
 
 	//Factions assignment
-	var primaryQuestFaction = pc.blades[bladesRNG];
+	skyrimVars['primaryQuestFaction'] = pc.blades[bladesRNG];
 
-	var civilWarFaction = pc.civilwar[civilwarRNG];
+	skyrimVars['civilWarFaction'] = pc.civilwar[civilwarRNG];
 
 	//Dawnguard faction taking into account the disease from earlier
-	if (disease == "Lycanthropy"){
-		dngFaction = pc.dlcFaction[0];
-	} else if (disease == "Vampirism"){
-		dngFaction = pc.dlcFaction[1];
+	if (skyrimVars['disease'] == "Lycanthropy"){
+		skyrimVars['dngFaction'] = pc.dlcFaction[0];
+	} else if (skyrimVars['disease'] == "Vampirism"){
+		skyrimVars['dngFaction'] = pc.dlcFaction[1];
 	} else {
-		dngFaction = pc.dlcFaction[Math.round(getRandomNumber(0,1))];
+		skyrimVars['dngFaction'] = pc.dlcFaction[Math.round(getRandomNumber(0,1))];
 	}
 
-	var totalSkillPoints = combatPoints + armorPoints + skill1Points + skill2Points + skill3Points + skill4Points;
+	skyrimVars['totalSkillPoints'] = skyrimVars['combatPoints'] + skyrimVars['armorPoints'] + skyrimVars['skill1Points'] + skyrimVars['skill2Points'] + skyrimVars['skill3Points'] + skyrimVars['skill4Points'];
 
-	$("#race").html("<font class=\"text-info\"><a onclick=\"raceGen()\">Race</a>: </font>" + race);
-	$("#gender").html("<font class=\"text-info\"><a onclick=\"genderGen()\">Gender</a>: </font>" + gender);
-	$("#totalSkillPoints").html("<font class=\"text-info\">Total Skill Points: </font>" + totalSkillPoints);
-	$("#combatSkillName").html("<font class=\"text-info\"><a onclick=\"combatGen()\">Combat Skill</a>: </font>" + combat);
-	$("#combatSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + combatPoints);
-	$("#armorSkillName").html("<font class=\"text-info\"><a onclick=\"armorGen()\">Armor Skill</a>: </font>" + armor);
-	$("#armorSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + armorPoints);
+	$("#race").html("<font class=\"text-info\"><a onclick=\"raceGen()\">Race</a>: </font>" + skyrimVars['race']);
+	$("#gender").html("<font class=\"text-info\"><a onclick=\"genderGen()\">Gender</a>: </font>" + skyrimVars['gender']);
+	$("#totalSkillPoints").html("<font class=\"text-info\">Total Skill Points: </font>" + skyrimVars['totalSkillPoints']);
+	$("#combatSkillName").html("<font class=\"text-info\"><a onclick=\"combatGen()\">Combat Skill</a>: </font>" + skyrimVars['combat']);
+	$("#combatSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['combatPoints']);
+	$("#armorSkillName").html("<font class=\"text-info\"><a onclick=\"armorGen()\">Armor Skill</a>: </font>" + skyrimVars['armor']);
+	$("#armorSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['armorPoints']);
 	$("#skill1Name").html("<font class=\"text-info\">First Skill: </font>" + skill1Name);
 	$("#skill1Points").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skill1Points);
 	$("#skill2Name").html("<font class=\"text-info\">Second Skill: </font>" + skill2Name);
@@ -173,39 +146,37 @@ function skyrimCharGen() {
 	$("#DawnguardFaction").html("<font class=\"text-info\">Dawnguard Faction: </font>" + dngFaction);
 	$("#PrimaryQuestFaction").html("<font class=\"text-info\">Primary Quest Faction: </font>" + primaryQuestFaction);
 	$("#CivilWarFaction").html("<font class=\"text-info\">Civil War Faction: </font>" + civilWarFaction);
-
+	totalSkillPointsGen()
 }
 
 function raceGen() {
 	raceRNG = Math.round(getRandomNumber(0,9));
-	race = pc.race[raceRNG];
+	skyrimVars['race'] = pc.race[raceRNG];
 	$("#race").html("<font class=\"text-info\"><a onclick=\"raceGen()\">Race</a>: </font>" + race);
 }
 
 function genderGen() {
 	genderRNG = Math.round(getRandomNumber(0,1));
-	gender = pc.gender[genderRNG];
+	skyrimVars['gender'] = pc.gender[genderRNG];
 	$("#gender").html("<font class=\"text-info\"><a onclick=\"genderGen()\">Gender: </font>" + gender);
 }
 
 function combatGen() {
 	combatRNG = Math.round(getRandomNumber(0,3));
-	combat = pc.combat[combatRNG].name;
-	combatPoints = pc.combat[combatRNG].skillpoints;
+	skyrimVars['combat'] = pc.combat[combatRNG].name;
+	skyrimVars['combatPoints'] = pc.combat[combatRNG].skillpoints;
 	$("#combatSkillName").html("<font class=\"text-info\"><a onclick=\"combatGen()\">Combat Skill</a>: </font>" + combat);
 	$("#combatSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + combatPoints);
-	var totalSkillPoints = combatPoints + armorPoints + skill1Points + skill2Points + skill3Points + skill4Points;
-	$("#totalSkillPoints").html("<font class=\"text-info\">Total Skill Points: </font>" + totalSkillPoints);
+	totalSkillPointsGen()
 }
 
 function armorGen () {
 	armorRNG = Math.round(getRandomNumber(0,2));
-	armor = pc.armor[armorRNG].name;
-	armorPoints = pc.armor[armorRNG].skillpoints;
+	skyrimVars['armor'] = pc.armor[armorRNG].name;
+	skyrimVars['armorPoints'] = pc.armor[armorRNG].skillpoints;
 	$("#armorSkillName").html("<font class=\"text-info\"><a onclick=\"armorGen()\">Armor Skill</a>: </font>" + armor);
 	$("#armorSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + armorPoints);
-	var totalSkillPoints = combatPoints + armorPoints + skill1Points + skill2Points + skill3Points + skill4Points;
-	$("#totalSkillPoints").html("<font class=\"text-info\">Total Skill Points: </font>" + totalSkillPoints);
+
 }
 
 function skillGen () {
@@ -237,22 +208,23 @@ function skillGen () {
 }
 
 function totalSkillPointsGen() {
-	totalSkillPoints = combatPoints + armorPoints + skill1Points + skill2Points + skill3Points + skill4Points;
+	skyrimVars['totalSkillPoints'] = skyrimVars['combatPoints'] + skyrimVars['armorPoints'] + skyrimVars['skill1Points'] + skyrimVars['skill2Points'] + skyrimVars['skill3Points'] + skyrimVars['skill4Points'];
+	$("#totalSkillPoints").html("<font class=\"text-info\">Total Skill Points: </font>" + skyrimVars['totalSkillPoints']);
 }
 
 function attributePointSpread() {
-	magicka = Math.round(getRandomNumber(1,5));
-	health = Math.round(getRandomNumber(1,5));
-	stamina = Math.round(getRandomNumber(1,5));
+	skyrimVars['magicka'] = Math.round(getRandomNumber(1,5));
+	skyrimVars['health'] = Math.round(getRandomNumber(1,5));
+	skyrimVars['stamina'] = Math.round(getRandomNumber(1,5));
 }
 
 function spouseGen() {
 	validSpouses = (gender == "Male") ? filterObj(spousesList, {gender: "Female"}) : filterObj(spousesList, {gender: "Male"});
-	spouse1 = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
-	spouse2 = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	skyrimVars['spouse1'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 
-	while (spouse2 == spouse1){
-		spouse2 = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	while (skyrimVars['spouse2'] == skyrimVars['spouse1']){
+		skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 	}
 }
 
