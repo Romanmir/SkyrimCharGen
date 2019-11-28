@@ -173,6 +173,34 @@
 		{"name" : "Vorstag","gender" : "Male","spouse" : "Yes","blades" : "Yes","Steward" : "No","follower" : "Yes","uesp" : "Skyrim"},
 		{"name" : "Wilhelm","gender" : "Male","spouse" : "Yes","blades" : "No","Steward" : "No","follower" : "No","uesp" : "Skyrim"},
 		{"name" : "Ysolda","gender" : "Female","spouse" : "Yes","blades" : "No","Steward" : "No","follower" : "No","uesp" : "Skyrim"}
-	]
-
+	],
+	"quests": {
+		"areas" : [
+			"Markath",
+			"Morthal",
+			"Riften",
+			"Solitude",
+			"Whiterun",
+			"Windhelm",
+			"Dragon Bridge",
+			"Ivarstead",
+			"Karthwasten",
+			"Riverwood",
+			"Rorikstead",
+			"Shor's Stone",
+			"Skaal VillageDB",
+			"Darkwater Crossing",
+			"Honningbrew Meadery",
+			"Kynesgrove",
+			"Nightgate Inn",
+			"Old Hroldan Inn",
+			"Stonehills",
+			"Tel MithrynDB",
+			"Thirsk Mead HallDB",
+			"Dushnikh Yal",
+			"Largashbur",
+			"Mor Khazgur",
+			"Narzulbur"	
+		]
+	}
 }
