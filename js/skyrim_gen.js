@@ -111,8 +111,19 @@ function skyrimCharGen() {
 	//steward block
 	skyrimVars['steward'] = stewardsList[Math.round(getRandomNumber(0,32))];
 
+	while (skyrimVars['steward'] == skyrimVars['spouse1'] ||
+	 skyrimVars['steward'] == skyrimVars['spouse2']){
+		skyrimVars['steward'] = stewardsList[Math.round(getRandomNumber(0,32))];
+	 }
+
 	//follower block
 	skyrimVars['follower'] = followersList[Math.round(getRandomNumber(0,36))];
+	
+	while (skyrimVars['follower'] == skyrimVars['spouse1'] ||
+	 skyrimVars['follower'] == skyrimVars['spouse2'] ||
+	 skyrimVars['follower'] == skyrimVars['steward']) {
+		skyrimVars['follower'] = stewardsList[Math.round(getRandomNumber(0,32))];
+	 }
 
 	//residence block
 	skyrimVars['primaryResidence'] = pc.residence[residenceRNG];
@@ -294,7 +305,9 @@ function spouse1Gen() {
 	validSpouses = (skyrimVars['gender'] == "Male") ? filterObj(spousesList, {gender: "Female"}) : filterObj(spousesList, {gender: "Male"});
 	skyrimVars['spouse1'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 
-	while (skyrimVars['spouse1'] == skyrimVars['spouse2']){
+	while (skyrimVars['spouse1'] == skyrimVars['spouse2'] ||
+			skyrimVars['spouse1'] == skyrimVars['steward'] ||
+			skyrimVars['spouse1'] == skyrimVars['follower']){
 		skyrimVars['spouse1'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 	}
 
@@ -306,7 +319,9 @@ function spouse2Gen() {
 	validSpouses = (skyrimVars['gender'] == "Male") ? filterObj(spousesList, {gender: "Female"}) : filterObj(spousesList, {gender: "Male"});
 	skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 
-	while (skyrimVars['spouse2'] == skyrimVars['spouse1']){
+	while (skyrimVars['spouse2'] == skyrimVars['spouse1'] ||
+		   skyrimVars['spouse2'] == skyrimVars['steward'] || 
+		   skyrimVars['spouse2'] == skyrimVars['follower']){
 		skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
 	}
 
@@ -322,12 +337,26 @@ function residenceGen() {
 function stewardGen() { 
 	var stewardsList = filterObj(npc, {Steward: "Yes"});
 	skyrimVars['steward'] = stewardsList[Math.round(getRandomNumber(0,32))];
+
+	while (skyrimVars['steward'] == skyrimVars['spouse1'] ||
+		   skyrimVars['steward'] == skyrimVars['spouse2'] || 
+		   skyrimVars['steward'] == skyrimVars['follower']){
+ 		skyrimVars['steward'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	}
+
 	$("#Steward").html("<font class=\"text-info\"><a onclick=\"stewardGen()\">Steward</a> </font>" + skyrimVars['steward'].name);
 }
 
 function followerGen() {
 	var followersList = filterObj(npc, {follower: "Yes"});
 	skyrimVars['follower'] = followersList[Math.round(getRandomNumber(0,36))];
+
+	while (skyrimVars['follower'] == skyrimVars['spouse1'] ||
+		   skyrimVars['follower'] == skyrimVars['spouse2'] || 
+		   skyrimVars['follower'] == skyrimVars['steward']){
+ 		skyrimVars['follower'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
+	}
+
 	$("#Follower").html("<font class=\"text-info\"><a onclick=\"followerGen()\">Follower</a>: </font>" + skyrimVars['follower'].name);
 }
 
@@ -369,4 +398,43 @@ function dngFaction() {
 function QuestOrderGen() {
 	skyrimVars['questOrder'] = shuffle(pc.factions);
 	$("#QuestOrder").html("<font class=\"text-info\"><a onclick=\"QuestOrderGen()\">Major Faction Alliance Order</a>:<br> </font>" + skyrimVars['questOrder'].join('<br>'));
+}
+
+function printThisPage() {
+
+	html2canvas(document.querySelector("#printThis")).then(canvas => {
+		//document.body.appendChild(canvas)
+		//console.log(canvas);
+        saveAs(canvas.toDataURL(), 'file-name.png');
+	});
+
+	// var canvas = document.getElementById("printThis");
+	// var img    = canvas.toDataURL("image/png");
+
+	//document.write('<img src="'+img+'"/>');
+}
+
+function saveAs(uri, filename) {
+
+    var link = document.createElement('a');
+
+    if (typeof link.download === 'string') {
+
+        link.href = uri;
+        link.download = filename;
+
+        //Firefox requires the link to be in the body
+        document.body.appendChild(link);
+
+        //simulate click
+        link.click();
+
+        //remove the link when done
+        document.body.removeChild(link);
+
+    } else {
+
+        window.open(uri);
+
+    }
 }
