@@ -36,6 +36,8 @@ var npc = data.npcs;
 
 var skyrimVars = {};
 
+skyrimVars['link']="http://www.uesp.net/wiki/Skyrim:";
+
 //foo['bar']=blah
 
 function skyrimCharGen() {
@@ -76,6 +78,7 @@ function skyrimCharGen() {
 
 	skyrimVars['gender'] = pc.gender[genderRNG];
 	skyrimVars['race'] = pc.race[raceRNG];
+	skyrimVars['raceLink'] = skyrimVars['link'] + skyrimVars['race'];
 	skyrimVars['civilwarFaction'] = pc.civilwar[civilwarRNG];
 	skyrimVars['bladesFaction'] = pc.blades[bladesRNG];
 
@@ -193,8 +196,9 @@ function skyrimCharGen() {
 function raceGen() {
 	raceRNG = Math.round(getRandomNumber(0,9));
 	skyrimVars['race'] = pc.race[raceRNG];
+	skyrimVars['raceLink'] = skyrimVars['link'] + skyrimVars['race'];
 
-	$("#race").html("<font class=\"text-info\"><a onclick=\"raceGen()\">Race</a>: </font>" + skyrimVars['race']);
+	$("#race").html("<font class=\"text-info\"><a onclick=\"raceGen()\">Race</a>: </font><a href=\"" + skyrimVars['raceLink'] + "\" target=\"_blank\">" + skyrimVars['race'] + "</a>");
 }
 
 function genderGen() {
