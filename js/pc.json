@@ -51,7 +51,7 @@
 		],
 		"disease": [
 			"None",
-			"Lycanthorpy",
+			"Lycanthropy",
 			"Vampirism"
 		],
 		"residence": [
@@ -64,14 +64,16 @@
 			"Lakeview_Manor",
 			"Windstad_Manor"
 		],
-		"Factions": [
+		"dngFactions": [
+			"Volkihar_Vampire_Clan",
+			"Dawnguard_(faction)"
+		],
+		"factions": [
 			"Companions",
 			"College_of_Winterhold_(faction)",
 			"Thieves_Guild_(faction)",
 			"Dark_Brotherhood",
-			"Bards_College",
-			"Volkihar_Vampire_Clan",
-			"Dawnguard_(faction)"
+			"Bards_College"
 		]
 	},
 	"npcs" : [
@@ -122,7 +124,7 @@
 		{"name" : "Illia","gender" : "Female","spouse" : "No","blades" : "Yes","Steward" : "Yes","follower" : "Yes","uesp" : "Skyrim"},
 		{"name" : "Ingjard","gender" : "Female","spouse" : "No","blades" : "Yes","Steward" : "Yes","follower" : "Yes","uesp" : "Skyrim"},
 		{"name" : "Iona","gender" : "Female","spouse" : "Yes","blades" : "Yes","Steward" : "Yes","follower" : "Yes","uesp" : "Skyrim"},
-		{"name" : "J\"zargo","gender" : "Male","spouse" : "No","blades" : "Yes","Steward" : "No","follower" : "Yes","uesp" : "Skyrim"},
+		{"name" : "J/'zargo","gender" : "Male","spouse" : "No","blades" : "Yes","Steward" : "No","follower" : "Yes","uesp" : "Skyrim"},
 		{"name" : "Jenassa","gender" : "Female","spouse" : "Yes","blades" : "Yes","Steward" : "No","follower" : "Yes","uesp" : "Skyrim"},
 		{"name" : "Jordis_the_Sword-Maiden","gender" : "Female","spouse" : "Yes","blades" : "Yes","Steward" : "Yes","follower" : "Yes","uesp" : "Skyrim"},
 		{"name" : "Kharjo","gender" : "Male","spouse" : "No","blades" : "Yes","Steward" : "No","follower" : "Yes","uesp" : "Skyrim"},
@@ -171,6 +173,34 @@
 		{"name" : "Vorstag","gender" : "Male","spouse" : "Yes","blades" : "Yes","Steward" : "No","follower" : "Yes","uesp" : "Skyrim"},
 		{"name" : "Wilhelm","gender" : "Male","spouse" : "Yes","blades" : "No","Steward" : "No","follower" : "No","uesp" : "Skyrim"},
 		{"name" : "Ysolda","gender" : "Female","spouse" : "Yes","blades" : "No","Steward" : "No","follower" : "No","uesp" : "Skyrim"}
-	]
-
+	],
+	"quests": {
+		"areas" : [
+			"Markath",
+			"Morthal",
+			"Riften",
+			"Solitude",
+			"Whiterun",
+			"Windhelm",
+			"Dragon Bridge",
+			"Ivarstead",
+			"Karthwasten",
+			"Riverwood",
+			"Rorikstead",
+			"Shor's Stone",
+			"Skaal VillageDB",
+			"Darkwater Crossing",
+			"Honningbrew Meadery",
+			"Kynesgrove",
+			"Nightgate Inn",
+			"Old Hroldan Inn",
+			"Stonehills",
+			"Tel MithrynDB",
+			"Thirsk Mead HallDB",
+			"Dushnikh Yal",
+			"Largashbur",
+			"Mor Khazgur",
+			"Narzulbur"	
+		]
+	}
 }
