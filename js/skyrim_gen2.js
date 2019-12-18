@@ -50,185 +50,26 @@ skyrimVars['dblink']="http://www.uesp.net/wiki/Dragonborn:";
 //foo['bar']=blah
 
 function skyrimCharGen() {
-
-	var stewardsList = filterObj(npc, {Steward: "Yes"});
-	var spousesList = filterObj(npc, {spouse: "Yes"});
-	var followersList = filterObj(npc, {follower: "Yes"});
-
-	//console.log(data.pc.gender[1]);
-
-	var genderRNG = Math.round(getRandomNumber(0,1));
-	var raceRNG = Math.round(getRandomNumber(0,9));
-	var combatRNG = Math.round(getRandomNumber(0,3));
-	var armorRNG = Math.round(getRandomNumber(0,2));
-	var civilwarRNG = Math.round(getRandomNumber(0,1));
-	var bladesRNG = Math.round(getRandomNumber(0,1));
-	var diseaseRNG = Math.round(getRandomNumber(0,2));
-	var residenceRNG = Math.round(getRandomNumber(0,7));
-
-	//special handling for skills because there will be 3-4 skills
-	var skill1RNG = Math.round(getRandomNumber(0,11));
-	var skill2RNG = Math.round(getRandomNumber(0,11));
-	var skill3RNG = Math.round(getRandomNumber(0,11));
-	var skill4RNG = Math.round(getRandomNumber(0,11));
-
-	while (skill2RNG == skill1RNG){
-		skill2RNG = Math.round(getRandomNumber(0,11));
-	}
-
-	while (skill3RNG == skill1RNG || skill3RNG == skill2RNG){
-		skill3RNG = Math.round(getRandomNumber(0,11));
-	}
-
-	while (skill4RNG == skill1RNG || skill4RNG == skill2RNG || skill4RNG == skill3RNG){
-		skill4RNG = Math.round(getRandomNumber(0,11));
-	}
-
-	skyrimVars['gender'] = pc.gender[genderRNG];
-	skyrimVars['race'] = pc.race[raceRNG];
-
-	skyrimVars['combat'] = pc.combat[combatRNG].name;
-	skyrimVars['combatPoints'] = pc.combat[combatRNG].skillpoints;
-
-	skyrimVars['armor'] = pc.armor[armorRNG].name;
-	skyrimVars['armorPoints'] = pc.armor[armorRNG].skillpoints;
-
-	skyrimVars['skill1Name'] = pc.skills[skill1RNG].name; 
-	skyrimVars['skill1Points'] = pc.skills[skill1RNG].skillpoints;
-	skyrimVars['skill2Name'] = pc.skills[skill2RNG].name;
-	skyrimVars['skill2Points'] = pc.skills[skill2RNG].skillpoints;
-	skyrimVars['skill3Name'] = pc.skills[skill3RNG].name;
-	skyrimVars['skill3Points'] = pc.skills[skill3RNG].skillpoints;
-	skyrimVars['skill4Name'] = pc.skills[skill4RNG].name;
-	skyrimVars['skill4Points'] =pc.skills[skill4RNG].skillpoints;
-
-	skyrimVars['magicka'] = Math.round(getRandomNumber(1,5));
-	skyrimVars['health'] = Math.round(getRandomNumber(1,5));
-	skyrimVars['stamina'] = Math.round(getRandomNumber(1,5));
-
-	//sigh, spouses code block
-	spouseGender = (skyrimVars['gender'] == "Male") ? spouseGender="Female" : spouseGender="Male";
-	var validSpouses = filterObj(spousesList, {gender: spouseGender});
-	skyrimVars['spouse1'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
-	skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
-
-	while (skyrimVars['spouse1'] == skyrimVars['spouse2']){
-		skyrimVars['spouse2'] = validSpouses[Math.round(getRandomNumber(0,validSpouses.length-1))];
-	}
-
-	//residence block
-	skyrimVars['primaryResidence'] = pc.residence[residenceRNG];
-
-	//steward block
-	skyrimVars['steward'] = stewardsList[Math.round(getRandomNumber(0,32))];
-
-	while (skyrimVars['steward'] == skyrimVars['spouse1'] ||
-	 skyrimVars['steward'] == skyrimVars['spouse2']){
-		skyrimVars['steward'] = stewardsList[Math.round(getRandomNumber(0,32))];
-	 }
-
-	//follower block
-	skyrimVars['follower'] = followersList[Math.round(getRandomNumber(0,36))];
-	
-	while (skyrimVars['follower'] == skyrimVars['spouse1'] ||
-	 skyrimVars['follower'] == skyrimVars['spouse2'] ||
-	 skyrimVars['follower'] == skyrimVars['steward']) {
-		skyrimVars['follower'] = stewardsList[Math.round(getRandomNumber(0,32))];
-	 }
-
-	skyrimVars['civilwarFaction'] = pc.civilwar[civilwarRNG];
-	//skyrimVars['bladesFaction'] = pc.blades[bladesRNG]; Un
-
-	//Disease assignment
-	skyrimVars['disease'] = pc.disease[diseaseRNG];
-
-	//Factions assignment
-	skyrimVars['primaryQuestFaction'] = pc.blades[bladesRNG];
-
-	skyrimVars['civilWarFaction'] = pc.civilwar[civilwarRNG];
-
-	//Dawnguard faction taking into account the disease from earlier
-	if (skyrimVars['disease'] == "Lycanthropy"){
-		skyrimVars['dngFaction'] = pc.dngFactions[1];
-	} else if (skyrimVars['disease'] == "None"){
-		skyrimVars['dngFaction'] = pc.dngFactions[1];
-	} else { 
-		skyrimVars['dngFaction'] = pc.dngFactions[Math.round(getRandomNumber(0,1))];
-	}
-
-	skyrimVars['totalSkillPoints'] = skyrimVars['combatPoints'] + skyrimVars['armorPoints'] + skyrimVars['skill1Points'] + skyrimVars['skill2Points'] + skyrimVars['skill3Points'] + skyrimVars['skill4Points'];
-
-	//Random Quest Order
-	skyrimVars['questOrder'] = shuffle(pc.factions);
-
-
-	//Build all of the links
-	skyrimVars['raceLink'] = skyrimVars['link'] + skyrimVars['race'];
-	skyrimVars['combatLink'] = skyrimVars['link'] + skyrimVars['combat'];
-	skyrimVars['armorLink'] = skyrimVars['link'] + skyrimVars['armor'];
-	skyrimVars['skill1Link'] = skyrimVars['link'] + skyrimVars['skill1Name'];
-	skyrimVars['skill2Link'] = skyrimVars['link'] + skyrimVars['skill2Name'];
-	skyrimVars['skill3Link'] = skyrimVars['link'] + skyrimVars['skill3Name'];
-	skyrimVars['skill4Link'] = skyrimVars['link'] + skyrimVars['skill4Name'];
-	
-	if (skyrimVars['spouse1'].uesp == "Skyrim"){
-		skyrimVars['spouse1Link'] = skyrimVars['link'] + skyrimVars['spouse1'].name;
-	} else {
-		skyrimVars['spouse1Link'] = skyrimVars['dblink'] + skyrimVars['spouse1'].name;
-	}
-
-	if (skyrimVars['spouse2'].uesp == "Skyrim"){
-		skyrimVars['spouse2Link'] = skyrimVars['link'] + skyrimVars['spouse2'].name;
-	} else {
-		skyrimVars['spouse2Link'] = skyrimVars['dblink'] + skyrimVars['spouse2'].name;
-	}
-
-	skyrimVars['primaryResLink'] = skyrimVars['link'] + skyrimVars['primaryResidence'];
-	
-	if (skyrimVars['steward'].uesp == "Skyrim") {
-		skyrimVars['stewardLink'] = skyrimVars['link'] + skyrimVars['steward'].name;
-	} else {
-		skyrimVars['stewardLink'] = skyrimVars['dblink'] + skyrimVars['steward'].name;
-	}
-
-	//Display all of the things.
-	$("#race").html("<font class=\"text-info\"><a onclick=\"raceGen()\">Race</a>: </font><a href=\"" + skyrimVars['raceLink'] + "\" target=\"_blank\">" + skyrimVars['race'] + "</a>");
-	$("#gender").html("<font class=\"text-info\"><a onclick=\"genderGen()\">Gender</a>: </font>" + skyrimVars['gender']);
-	$("#totalSkillPoints").html("<font class=\"text-info\">Total Skill Points: </font>" + skyrimVars['totalSkillPoints']);
-
-	$("#combatSkillName").html("<font class=\"text-info\"><a onclick=\"combatGen()\">Combat Skill</a>: </font><a href=\""  + skyrimVars['combatLink'] + "\" target=\"_blank\">" + skyrimVars['combat'] + "</a>");
-	$("#combatSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['combatPoints']);
-	$("#armorSkillName").html("<font class=\"text-info\"><a onclick=\"armorGen()\">Armor Skill</a>: </font><a href=\""  + skyrimVars['armorLink'] + "\" target=\"_blank\">" + skyrimVars['armor'] + "</a>");
-	$("#armorSkillPoints").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['armorPoints']);
-	
-	$("#skill1Name").html("<font class=\"text-info\"><a onclick=\"skill1Gen()\">First Skill</a>: </font><a href=\"" + skyrimVars['skill1Link'] + "\" target=\"_blank\">" + skyrimVars['skill1Name'] + "</a>");
-	$("#skill1Points").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['skill1Points']);
-	
-	$("#skill2Name").html("<font class=\"text-info\"><a onclick=\"skill2Gen()\">Second Skill</a>: </font>" + skyrimVars['skill2Name']);
-	$("#skill2Points").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['skill2Points']);
-	
-	$("#skill3Name").html("<font class=\"text-info\"><a onclick=\"skill3Gen()\">Third Skill</a>: </font>" + skyrimVars['skill3Name']);
-	$("#skill3Points").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['skill3Points']);
-	
-	$("#skill4Name").html("<font class=\"text-info\"><a onclick=\"skill4Gen()\">Forth Skill</a>: </font>" + skyrimVars['skill4Name']);
-	$("#skill4Points").html("<font align=\"right\" class=\"text-info\">Skill Points: </font>" + skyrimVars['skill4Points']);
-
-	$("#Health").html("<font class=\"text-danger\"><a onclick=\"attributePointSpread()\">Health</a>: </font>" + skyrimVars['health']);
-	$("#Stamina").html("<font class=\"text-success\"><a onclick=\"attributePointSpread()\">Stamina</a>: </font>" + skyrimVars['stamina']);
-	$("#Magicka").html("<font class=\"text-info\"><a onclick=\"attributePointSpread()\">Magicka</a>: </font>" + skyrimVars['magicka']);
-
-	$("#Spouse1").html("<font class=\"text-info\"><a onclick=\"spouse1Gen()\">Spouse 1</a>: </font>" + skyrimVars['spouse1'].name);
-	$("#Spouse2").html("<font class=\"text-info\"><a onclick=\"spouse2Gen()\">Spouse 2</a>: </font>" + skyrimVars['spouse2'].name);
-	$("#Residence").html("<font class=\"text-info\"><a onclick=\"residenceGen()\">Primary Residence</a>: </font>" + skyrimVars['primaryResidence']);
-	$("#Steward").html("<font class=\"text-info\"><a onclick=\"stewardGen()\">Steward</a>: </font>" + skyrimVars['steward'].name);
-	$("#Follower").html("<font class=\"text-info\"><a onclick=\"followerGen()\">Follower</a>: </font>" + skyrimVars['follower'].name);
-	
-	$("#Disease").html("<font class=\"text-info\"><a onclick=\"diseaseGen()\">Disease</a>: </font>" + skyrimVars['disease']);
-	$("#DawnguardFaction").html("<font class=\"text-info\"><a onclick=\"dngFaction()\">Dawnguard Faction</a>: </font>" + skyrimVars['dngFaction']);
-	$("#PrimaryQuestFaction").html("<font class=\"text-info\"><a onclick=\"factionGen()\">Primary Quest Faction</a>: </font>" + skyrimVars['primaryQuestFaction']);
-	$("#CivilWarFaction").html("<font class=\"text-info\"><a onclick=\"civilWarFaction()\">Civil War Faction</a>: </font>" + skyrimVars['civilWarFaction']);
-	$("#QuestOrder").html("<font class=\"text-info\"><a onclick=\"QuestOrderGen()\">Major Faction Alliance Order</a>:<br> </font>" + skyrimVars['questOrder'].join('<br>'));	
-	totalSkillPointsGen()
+	raceGen();
+	genderGen();
+	combatGen();
+	armorGen();
+	skill1Gen();
+	skill2Gen();
+	skill3Gen();
+	skill4Gen();
+	attributePointSpread();
+	spouse1Gen();
+	spouse2Gen();
+	residenceGen();
+	stewardGen();
+	followerGen();
+	civilWarFaction();
+	factionGen();
+	diseaseGen();
+	dngFaction();
+	questOrderGen();
+	totalSkillPointsGen();
 }
 
 function raceGen() {
@@ -420,28 +261,41 @@ function followerGen() {
 	$("#Follower").html("<font class=\"text-info\"><a onclick=\"followerGen()\">Follower</a>: </font>" + skyrimVars['follower'].name);
 }
 
-function civilWarFaction() {
-	if (skyrimVars['civilWarFaction'] == "Imperial_Legion") {
-		skyrimVars['civilWarFaction'] = "Stormcloaks"
+function factionGen() {
+	//Greybeards vs. Blades
+	if (typeof skyrimVars['bladesFaction'] == "undefined"){
+		var bladesRNG = Math.round(getRandomNumber(0,1));
+		skyrimVars['bladesFaction'] = pc.blades[bladesRNG];
 	} else {
-		skyrimVars['civilWarFaction'] = "Imperial_Legion"
+		if (skyrimVars['bladesFaction'] == "Blades") {
+			skyrimVars['bladesFaction'] = "Greybeards"
+		} else {
+			skyrimVars['bladesFaction'] = "Blades"
+		}
 	}
-	$("#CivilWarFaction").html("<font class=\"text-info\"><a onclick=\"civilWarFaction()\">Civil War Faction</a>: </font>" + skyrimVars['civilWarFaction']);
+
+	skyrimVars['bladesFactionLink'] = skyrimVars['link'] + skyrimVars['bladesFaction'];
+	$("#PrimaryQuestFaction").html("<font class=\"text-info\"><a onclick=\"factionGen()\">Primary Quest Faction</a>: </font><a href=\"" + skyrimVars['bladesFaction'] + "\" target=\"_blank\">" + skyrimVars['bladesFaction']);
 }
 
-function factionGen() {
-	if (skyrimVars['primaryQuestFaction'] == "Blades") {
-		skyrimVars['primaryQuestFaction'] = "Greybeards"
+function civilWarFaction() {
+	if (typeof skyrimVars['civilWarFaction'] == "undefined"){
+		var civilwarRNG = Math.round(getRandomNumber(0,1));
+		skyrimVars['civilWarFaction'] = pc.civilwar[civilwarRNG];
 	} else {
-		skyrimVars['primaryQuestFaction'] = "Blades"
+		skyrimVars['civilWarFaction'] = (skyrimVars['civilWarFaction'] == "Imperial_Legion") ? skyrimVars['civilWarFaction'] = "Stormcloaks" : skyrimVars['civilWarFaction'] = "Imperial_Legion";
 	}
-	$("#PrimaryQuestFaction").html("<font class=\"text-info\"><a onclick=\"factionGen()\">Primary Quest Faction</a>: </font>" + skyrimVars['primaryQuestFaction']);
+
+	skyrimVars['civilWarFactionLink'] = skyrimVars['link'] + skyrimVars['civilWarFaction'];
+	$("#CivilWarFaction").html("<font class=\"text-info\"><a onclick=\"civilWarFaction()\">Civil War Faction</a>: </font><a href=\"" + skyrimVars['civilWarFactionLink'] + "\" target=\"_blank\">" + skyrimVars['civilWarFaction']);
 }
 
 function diseaseGen() {
 	var diseaseRNG = Math.round(getRandomNumber(0,2));
 	skyrimVars['disease'] = pc.disease[diseaseRNG];
-	$("#Disease").html("<font class=\"text-info\"><a onclick=\"diseaseGen()\">Disease</a>: </font>" + skyrimVars['disease']);
+
+	skyrimVars['diseaseLink'] = skyrimVars['link'] + skyrimVars['disease'];
+	$("#Disease").html("<font class=\"text-info\"><a onclick=\"diseaseGen()\">Disease</a>: </font><a href=\"" + skyrimVars['diseaseLink'] + "\" target=\"_blank\">" + skyrimVars['disease'] + "</a>");
 }
 
 function dngFaction() {
@@ -455,46 +309,29 @@ function dngFaction() {
 	$("#DawnguardFaction").html("<font class=\"text-info\"><a onclick=\"dngFaction()\">Dawnguard Faction</a>: </font>" + skyrimVars['dngFaction']);
 }
 
-function QuestOrderGen() {
+function questOrderGen() {
 	skyrimVars['questOrder'] = shuffle(pc.factions);
-	$("#QuestOrder").html("<font class=\"text-info\"><a onclick=\"QuestOrderGen()\">Major Faction Alliance Order</a>:<br> </font>" + skyrimVars['questOrder'].join('<br>'));
+	$("#QuestOrder").html("<font class=\"text-info\"><a onclick=\"questOrderGen()\">Major Faction Alliance Order</a>:<br> </font>" + skyrimVars['questOrder'].join('<br>'));
 }
 
 function printThisPage() {
-
 	html2canvas(document.querySelector("#printThis")).then(canvas => {
-		//document.body.appendChild(canvas)
-		//console.log(canvas);
         saveAs(canvas.toDataURL(), 'file-name.png');
 	});
-
-	// var canvas = document.getElementById("printThis");
-	// var img    = canvas.toDataURL("image/png");
-
-	//document.write('<img src="'+img+'"/>');
 }
 
 function saveAs(uri, filename) {
-
     var link = document.createElement('a');
-
     if (typeof link.download === 'string') {
-
         link.href = uri;
         link.download = filename;
-
         //Firefox requires the link to be in the body
         document.body.appendChild(link);
-
         //simulate click
         link.click();
-
         //remove the link when done
         document.body.removeChild(link);
-
     } else {
-
         window.open(uri);
-
     }
 }
