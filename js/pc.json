@@ -39,7 +39,7 @@
 		"armor": [
 			{"name": "Heavy_Armor", "skillpoints":12},
 			{"name": "Light_Armor", "skillpoints":10},
-			{"name": "No_Armor", "skillpoints":0}
+			{"name": "Clothing", "skillpoints":0}
 		],
 		"civilwar": [
 			"Imperial_Legion",
